@@ -1,5 +1,14 @@
 # Notcoin Clone
 
+<div align="center">
+  <img src="https://nikandr.com/og-image.jpg" alt="Nikandr - Premium Telegram Development Resources" width="600"/>
+  
+  🚀 **Looking to master Telegram Mini App development?**  
+  Visit [nikandr.com](https://nikandr.com) for the best premium content and courses for Telegram developers.
+</div>
+
+---
+
 This repository contains the initial setup and the final version of the Notcoin clone project, including the basic project structure, necessary images, and icons.
 
 ## Overview
@@ -70,7 +79,18 @@ To get started with either the initial setup or the final version, follow these 
 
     Navigate to localhost to see the final version of the application.
 
-## Contact
+## Author
+### Nikandr Surkov
+- 🌐 Website: https://nikandr.com
+- 📺 YouTube: https://www.youtube.com/@NikandrSurkov
+- 📢 Telegram Channel: https://t.me/NikandrApps
+- 📱 Telegram: https://t.me/nikandr_s
+- 💻 GitHub: https://github.com/nikandr-surkov
+- 🐦 Twitter: https://x.com/NikandrSurkov
+- 💼 LinkedIn: https://www.linkedin.com/in/nikandr-surkov/
+- ✍️ Medium: https://medium.com/@NikandrSurkov
 
-For any inquiries, please contact me in Telegram: [Nikandr Surkov](https://t.me/nikandr_s).
+---
+
+Built with ❤️ for the Telegram developer community
 
