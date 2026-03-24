@@ -53,7 +53,7 @@ const App = () => {
         const ref = tg?.initDataUnsafe?.start_param;
 
         // 🔗 Backend API call
-        const res = await fetch("http://localhost:5000/api/auth/login", {
+        const res = await fetch("https://mlmbackend-production.up.railway.app/api/auth/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
