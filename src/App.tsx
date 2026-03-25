@@ -8,6 +8,7 @@ const App = () => {
   const [user, setUser] = useState<any>(null);
   const [referralLink, setReferralLink] = useState("");
   const [loading, setLoading] = useState(true);
+  
 
   const [stats, setStats] = useState({
     joined: 0,
@@ -22,22 +23,39 @@ const App = () => {
         const tg = window?.Telegram?.WebApp;
 
         // 👉 Telegram check
-        if (!tg) {
-          console.log("Not inside Telegram");
+      if (!tg) {
+  console.log("Not inside Telegram");
 
-          // 🔥 Browser fallback
-          setUser({ username: "DemoUser" });
-          setReferralLink("https://t.me/demo_ref");
+  // 🔥 URL referral
+  const urlParams = new URLSearchParams(window.location.search);
+  const ref = urlParams.get("ref");
 
-          setStats({
-            joined: 5,
-            points: 100,
-            earning: 50
-          });
+  const res = await fetch("https://mlmbackend-production.up.railway.app/api/auth/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      telegramId: "web_" + Date.now(), // 👈 fake unique id
+      username: "WebUser",
+      ref
+    })
+  });
 
-          setLoading(false);
-          return;
-        }
+  const data = await res.json();
+
+  setUser(data.user);
+  setReferralLink(data.referralLink);
+
+  setStats({
+    joined: data.user?.referrals?.length || 0,
+    points: 100,
+    earning: 50
+  });
+
+  setLoading(false);
+  return;
+}
 
         tg.ready();
 
@@ -50,7 +68,15 @@ const App = () => {
           return;
         }
 
-        const ref = tg?.initDataUnsafe?.start_param;
+        // 🔥 Telegram ref
+const tgRef = tg?.initDataUnsafe?.start_param;
+
+// 🔥 Browser ref (IMPORTANT)
+const urlParams = new URLSearchParams(window.location.search);
+const urlRef = urlParams.get("ref");
+
+// ✅ Final ref priority
+const ref = tgRef || urlRef;
 
         // 🔗 Backend API call
         const res = await fetch("https://mlmbackend-production.up.railway.app/api/auth/login", {
@@ -97,14 +123,17 @@ const App = () => {
   }, []);
 
   // 📋 COPY
-  const handleCopy = () => {
-    if (!referralLink) return;
+ const handleCopy = () => {
+  if (!referralLink) return;
 
-    navigator.clipboard.writeText(referralLink);
-    setCopied(true);
+  navigator.clipboard.writeText(referralLink);
+  setCopied(true);
 
-    setTimeout(() => setCopied(false), 2000);
-  };
+  // 🔥 open telegram share
+  window.open(`https://t.me/share/url?url=${referralLink}`);
+
+  setTimeout(() => setCopied(false), 2000);
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-main text-white px-4">
