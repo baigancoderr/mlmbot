@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import "./index.css";
 
-
-
 const App = () => {
   const [copied, setCopied] = useState(false);
   const [user, setUser] = useState<any>(null);
@@ -30,7 +28,7 @@ const App = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const ref = urlParams.get("ref");
 
-  const res = await fetch("https://mlmbackend-production.up.railway.app/api/auth/login", {
+  const res = await fetch("https://mlmbackend-7.onrender.com/api/auth/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -42,16 +40,26 @@ const App = () => {
     })
   });
 
-  const data = await res.json();
+ const data = await res.json();
 
-  setUser(data.user);
-  setReferralLink(data.referralLink);
+if (!data.success) {
+  console.log("Backend error:", data);
 
-  setStats({
-    joined: data.user?.referrals?.length || 0,
-    points: 100,
-    earning: 50
-  });
+  setUser({ username: "Referral Required" });
+  setReferralLink("Open from referral link");
+
+  setLoading(false);
+  return;
+}
+
+setUser(data.user);
+setReferralLink(data.referralLink);
+
+setStats({
+  joined: data.user?.referrals?.length || 0,
+  points: 100,
+  earning: 50
+});
 
   setLoading(false);
   return;
@@ -79,7 +87,7 @@ const urlRef = urlParams.get("ref");
 const ref = tgRef || urlRef;
 
         // 🔗 Backend API call
-        const res = await fetch("https://https://mlmbackend-7.onrender.com/api/auth/login", {
+        const res = await fetch("https://mlmbackend-7.onrender.com/api/auth/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -93,9 +101,15 @@ const ref = tgRef || urlRef;
 
         const data = await res.json();
 
-        if (!data.success) {
-          throw new Error("API failed");
-        }
+      if (!data.success) {
+  console.log("Backend error:", data);
+
+  setUser({ username: "Referral Required" });
+  setReferralLink("Open from referral link");
+
+  setLoading(false);
+  return;
+}
 
         setUser(data.user);
         setReferralLink(data.referralLink);
