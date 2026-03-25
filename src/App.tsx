@@ -14,6 +14,15 @@ const App = () => {
     earning: 0
   });
 
+  const tg = window?.Telegram?.WebApp;
+
+if (!tg || !tg?.initDataUnsafe?.user) {
+  return (
+    <div className="h-screen flex items-center justify-center bg-black text-white text-center">
+      <h2>❌ Open in Telegram Only</h2>
+    </div>
+  );
+}
   // 🚀 LOAD USER
   useEffect(() => {
     const loadUser = async () => {
@@ -21,49 +30,7 @@ const App = () => {
         const tg = window?.Telegram?.WebApp;
 
         // 👉 Telegram check
-      if (!tg) {
-  console.log("Not inside Telegram");
-
-  // 🔥 URL referral
-  const urlParams = new URLSearchParams(window.location.search);
-  const ref = urlParams.get("ref");
-
-  const res = await fetch("https://mlmbackend-7.onrender.com/api/auth/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      telegramId: "web_" + Date.now(), // 👈 fake unique id
-      username: "WebUser",
-      ref
-    })
-  });
-
- const data = await res.json();
-
-if (!data.success) {
-  console.log("Backend error:", data);
-
-  setUser({ username: "Referral Required" });
-  setReferralLink("Open from referral link");
-
-  setLoading(false);
-  return;
-}
-
-setUser(data.user);
-setReferralLink(data.referralLink);
-
-setStats({
-  joined: data.user?.referrals?.length || 0,
-  points: 100,
-  earning: 50
-});
-
-  setLoading(false);
-  return;
-}
+ 
 
         tg.ready();
 
