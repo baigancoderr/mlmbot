@@ -79,7 +79,7 @@ const urlRef = urlParams.get("ref");
 const ref = tgRef || urlRef;
 
         // 🔗 Backend API call
-        const res = await fetch("https://mlmbackend-production.up.railway.app/api/auth/login", {
+        const res = await fetch("https://https://mlmbackend-7.onrender.com/api/auth/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
